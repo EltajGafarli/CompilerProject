@@ -10,6 +10,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Builder
-public class User implements UserDetails, Serializable {
+public class User extends BaseEntity implements UserDetails, Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -82,5 +83,27 @@ public class User implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects
+                .hash(this.id, this.email, this.roles, this.firstName, this.lastName, this.password,
+                        this.getCreatedAt(), this.getUpdatedAt());
+    }
+
+    public boolean equals(Object obj) {
+        if(obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        return Objects.deepEquals(this.id, user.id)
+                && Objects.deepEquals(this.roles, user.roles)
+                && Objects.deepEquals(this.email, user.email)
+                && Objects.deepEquals(this.lastName, user.firstName)
+                && Objects.deepEquals(this.lastName, user.lastName)
+                && Objects.deepEquals(this.password, user.password)
+                && Objects.deepEquals(this.getCreatedAt(), user.getCreatedAt())
+                && Objects.deepEquals(this.getUpdatedAt(), user.getUpdatedAt());
     }
 }

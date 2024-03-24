@@ -5,6 +5,7 @@ import com.example.sdpproject.dto.auth.request.RegisterRequest;
 import com.example.sdpproject.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(path = "/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<String> register(@RequestBody @Valid RegisterRequest request) {
         log.info(request.toString());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -32,7 +33,7 @@ public class AuthController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<String> login(@RequestBody @Valid LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(authService.authentication(loginRequest, request, response));
