@@ -1,0 +1,67 @@
+databaseChangeLog:
+  - changeSet:
+      author: SDP
+      id: sdp-changeset
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: first_name
+                  type: varchar(50)
+                  constraints:
+                    notNullConstraintName: FIRSTNAME_NOT_NULL
+              - column:
+                  name: last_name
+                  type: varchar(50)
+                  constraints:
+                    notNullConstraintName: LASTNAME_NOT_NULL
+
+              - column:
+                  name: email
+                  type: varchar(50)
+                  constraints:
+                    notNullConstraintName: EMAIL_NOT_NULL
+                    unique: true
+                    uniqueConstraintName: EMAIL_UNIQUE_CONSTRAINT
+              - column:
+                  name: password
+                  type: varchar(50)
+                  constraints:
+                    notNullConstraintName: PASSWORD_NOT_NULL
+              - column:
+                  name: username
+                  type: varchar(50)
+                  constraints:
+                    notNullConstraintName: USERNAME_NOT_NULL
+                    uniqueConstraintName: PASSWORD_UNIQUE_CONSTRAINT
+                    unique: true
+
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: role_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: role
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: FK_ROLE_USER
+                    references: users(id)
+                    deleteCascade: true

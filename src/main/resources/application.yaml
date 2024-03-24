@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: SDPProject
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 190407011
+    url: jdbc:mysql://localhost:3306/sdpproject
+
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    database: mysql
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+  rabbitmq:
+    listener:
+      simple:
+        auto-startup: false
+  liquibase:
+    enabled: false
+    change-log: db/changelog-master.yaml
+
+server:
+  port: 8088
