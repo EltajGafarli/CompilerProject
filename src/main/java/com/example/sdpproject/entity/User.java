@@ -32,6 +32,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     private String lastName;
     private String userName;
     private String email;
+    private boolean isEnabled = false;
 
     @Column(columnDefinition = "varchar(250)")
     private String password;
@@ -47,7 +48,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
             orphanRemoval = true,
             mappedBy = "user"
     )
-    private Set<Roles> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -82,13 +83,13 @@ public class User extends BaseEntity implements UserDetails, Serializable {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.isEnabled;
     }
 
     @Override
     public int hashCode() {
         return Objects
-                .hash(this.id, this.email, this.roles, this.firstName, this.lastName, this.password,
+                .hash(this.id, this.email, this.roles, this.firstName, this.lastName, this.password, isEnabled,
                         this.getCreatedAt(), this.getUpdatedAt());
     }
 
@@ -98,12 +99,20 @@ public class User extends BaseEntity implements UserDetails, Serializable {
         }
         User user = (User) obj;
         return Objects.deepEquals(this.id, user.id)
-                && Objects.deepEquals(this.roles, user.roles)
                 && Objects.deepEquals(this.email, user.email)
                 && Objects.deepEquals(this.lastName, user.firstName)
                 && Objects.deepEquals(this.lastName, user.lastName)
                 && Objects.deepEquals(this.password, user.password)
+                && Objects.deepEquals(this.isEnabled, user.isEnabled)
                 && Objects.deepEquals(this.getCreatedAt(), user.getCreatedAt())
                 && Objects.deepEquals(this.getUpdatedAt(), user.getUpdatedAt());
+    }
+
+    public void addRole(Role role) {
+        if(this.roles == null) {
+            this.roles = new HashSet<>();
+        }
+        this.roles.add(role);
+        role.setUser(this);
     }
 }

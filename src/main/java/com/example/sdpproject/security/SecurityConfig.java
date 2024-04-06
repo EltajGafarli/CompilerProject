@@ -18,6 +18,11 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
+    private static final String[] AUTH_WHITELIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -25,7 +30,9 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/api/auth/login", "/api/auth/register")
+                                .requestMatchers(AUTH_WHITELIST)
+                                .permitAll()
+                                .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/verification/verify")
                                 .permitAll()
                 )
                 .authorizeHttpRequests(

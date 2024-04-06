@@ -18,7 +18,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @Builder
-public class Roles extends BaseEntity implements Serializable {
+public class Role extends BaseEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -40,7 +40,7 @@ public class Roles extends BaseEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects
-                .hash(this.roleId, this.role, this.user,
+                .hash(this.roleId, this.role,
                         this.getCreatedAt(), this.getUpdatedAt());
     }
 
@@ -49,12 +49,11 @@ public class Roles extends BaseEntity implements Serializable {
         if(obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
-        Roles roles = (Roles) obj;
+        Role roles = (Role) obj;
         return Objects
                 .deepEquals(this.role, roles.role)
                 && Objects.deepEquals(this.roleId, roles.roleId)
-                && Objects.deepEquals(this.user, roles.user)
-                && Objects.deepEquals(this.getCreatedAt(), user.getCreatedAt())
-                && Objects.deepEquals(this.getUpdatedAt(), user.getUpdatedAt());
+                && Objects.deepEquals(this.getCreatedAt(), roles.getCreatedAt())
+                && Objects.deepEquals(this.getUpdatedAt(), roles.getUpdatedAt());
     }
 }
