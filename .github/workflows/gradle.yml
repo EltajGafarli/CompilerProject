@@ -16,7 +16,6 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: 190407011
           MYSQL_DATABASE: sdpproject
-          MYSQL_USER: root
         ports:
           - 3306:3306
         options: >-
