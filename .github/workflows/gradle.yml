@@ -12,12 +12,11 @@ jobs:
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:latest
         env:
           MYSQL_ROOT_PASSWORD: 190407011
           MYSQL_DATABASE: sdpproject
           MYSQL_USER: root
-          MYSQL_PASSWORD: 190407011
         ports:
           - 3306:3306
         options: >-
