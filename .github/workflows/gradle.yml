@@ -47,6 +47,8 @@ jobs:
       uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
     - name: Gradle Execution Permission
       run: chmod +x ./gradlew
+    - name: Gradle Check dependecy Conflicts
+      run: ./gradlew dependencies --configuration compileClasspath
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
