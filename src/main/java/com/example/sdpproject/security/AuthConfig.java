@@ -1,6 +1,6 @@
 package com.example.sdpproject.security;
 
-import com.example.sdpproject.repository.UserRepository;
+import com.example.sdpproject.repository.auth.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
