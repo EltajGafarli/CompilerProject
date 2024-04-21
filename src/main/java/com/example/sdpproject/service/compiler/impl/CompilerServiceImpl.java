@@ -1,9 +1,11 @@
 package com.example.sdpproject.service.compiler.impl;
 
 import com.example.sdpproject.compiler.CompilerApiClient;
-import com.example.sdpproject.dto.algorithm.*;
+import com.example.sdpproject.dto.algorithm.AlgorithmRequest;
+import com.example.sdpproject.dto.algorithm.AlgorithmResponse;
+import com.example.sdpproject.dto.algorithm.SubmissionRequestDto;
+import com.example.sdpproject.dto.algorithm.SubmissionResponseDto;
 import com.example.sdpproject.entity.algorithm.Algorithm;
-import com.example.sdpproject.entity.algorithm.AlgorithmTestCases;
 import com.example.sdpproject.entity.algorithm.Submission;
 import com.example.sdpproject.entity.user.User;
 import com.example.sdpproject.exception.NotFoundException;
@@ -14,12 +16,9 @@ import com.example.sdpproject.service.compiler.CompilerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor

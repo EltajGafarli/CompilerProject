@@ -1,7 +1,6 @@
 package com.example.sdpproject.entity.algorithm;
 
 
-import com.example.sdpproject.entity.enums.ProgrammingLanguages;
 import com.example.sdpproject.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

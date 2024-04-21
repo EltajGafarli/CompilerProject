@@ -13,8 +13,6 @@ import com.example.sdpproject.repository.compiler.DifficultyRepository;
 import com.example.sdpproject.service.compiler.AlgorithmService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.builder.Diff;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

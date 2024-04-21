@@ -2,14 +2,14 @@ package com.example.sdpproject.email.impl;
 
 import com.example.sdpproject.email.MailSenderService;
 import com.example.sdpproject.entity.user.User;
-import static com.example.sdpproject.util.JavaMailSenderConstants.*;
-
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import static com.example.sdpproject.util.JavaMailSenderConstants.*;
 
 @Service
 @RequiredArgsConstructor
