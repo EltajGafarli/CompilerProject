@@ -49,8 +49,8 @@ public class AuthServiceImpl implements AuthService {
         userRepository.findUserByEmailOrUserName(
                 request.getEmail(),
                 request.getUserName()
-        ).orElseThrow(
-                () -> new AlreadyExistException("User already exist!")
+        ).ifPresent(
+                (data) -> new AlreadyExistException("User already exist!")
         );
 
         User user = getUser(request);

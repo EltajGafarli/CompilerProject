@@ -13,6 +13,8 @@ import com.example.sdpproject.repository.compiler.SubmissionRepository;
 import com.example.sdpproject.service.compiler.CompilerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackOn = Exception.class)
+@Slf4j
 public class CompilerServiceImpl implements CompilerService {
     private final CompilerApiClient apiClient;
     private final AlgorithmRepository algorithmRepository;
@@ -53,7 +56,7 @@ public class CompilerServiceImpl implements CompilerService {
         var testCases = algorithm.getTestCases();
 
         long memory = 0L;
-        long cpuTime = 0L;
+        double cpuTime = 0L;
 
         for(var test: testCases) {
             AlgorithmRequest algorithmRequest = AlgorithmRequest
@@ -66,12 +69,14 @@ public class CompilerServiceImpl implements CompilerService {
 
             AlgorithmResponse algorithmResponse = sendSolution(algorithmRequest);
 
-            memory += Long.getLong(algorithmResponse.getMemory());
-            cpuTime += Long.getLong(algorithmResponse.getCpuTime());
+            if(algorithmResponse.getMemory() != null && algorithmResponse.getCpuTime() != null) {
+                memory += Long.parseLong(algorithmResponse.getMemory());
+                cpuTime += Double.parseDouble(algorithmResponse.getCpuTime());
+            }
 
             if(!algorithmResponse.getOutput().equals(test.getCorrectAnswer())) {
                 Submission submission = Submission.builder()
-                        .cpuTime(Long.toString(cpuTime))
+                        .cpuTime(Double.toString(cpuTime))
                         .memory(Long.toString(memory))
                         .solutionCode(algorithmRequest.getScript())
                         .programmingLanguage(algorithmRequest.getLanguage())
@@ -87,7 +92,7 @@ public class CompilerServiceImpl implements CompilerService {
         }
 
         Submission submission = Submission.builder()
-                .cpuTime(Long.toString(cpuTime))
+                .cpuTime(Double.toString(cpuTime))
                 .memory(Long.toString(memory))
                 .solutionCode(submissionRequestDto.getSolutionCode())
                 .programmingLanguage(submissionRequestDto.getProgrammingLanguages().getLanguageCode())
