@@ -1,6 +1,6 @@
 package com.example.sdpproject.email;
 
-import com.example.sdpproject.entity.User;
+import com.example.sdpproject.entity.user.User;
 
 public interface MailSenderService {
     void sendVerificationCodeToAdmin(User admin, String verificationCode);

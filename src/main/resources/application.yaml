@@ -14,7 +14,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       ddl-auto: update
     open-in-view: false
@@ -45,3 +44,7 @@ server:
 
 admin:
   email: "eltajgafarli@gmail.com"
+
+secrets:
+  clientId: c1b4ac0ed062629ee611c80f41c9cd57
+  clientSecrets: cc8c73db8a00827e7a64a45f3fe98c8e3f31609c7fbb6cc1f372528946a9c264

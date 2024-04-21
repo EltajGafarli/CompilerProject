@@ -1,7 +1,7 @@
 package com.example.sdpproject.email.impl;
 
 import com.example.sdpproject.email.MailSenderService;
-import com.example.sdpproject.entity.User;
+import com.example.sdpproject.entity.user.User;
 import static com.example.sdpproject.util.JavaMailSenderConstants.*;
 
 import jakarta.mail.internet.MimeMessage;
@@ -18,14 +18,14 @@ public class MailSenderServiceImpl implements MailSenderService {
     @Override
     @SneakyThrows
     public void sendVerificationCodeToAdmin(User admin, String verificationCode) {
-        String replaceContent = ADMIN_REGISTRATION_CONTENT.replace(ADMIN_KEY, admin.getUsername());
+        String replaceContent = ADMIN_REGISTRATION_CONTENT.replace(ADMIN_KEY, admin.getUsername()) + " " + verificationCode;
         sendEmail(admin.getEmail(), replaceContent, verificationCode);
     }
 
     @Override
     @SneakyThrows
     public void sendVerificationCodeToUser(User user, String verificationCode) {
-        String replacedContent = USER_REGISTRATION_CONTENT.replace(USER_KEY, user.getUsername());
+        String replacedContent = USER_REGISTRATION_CONTENT.replace(USER_KEY, user.getUsername()) + " " + verificationCode;
         sendEmail(user.getEmail(), replacedContent, verificationCode);
     }
 
