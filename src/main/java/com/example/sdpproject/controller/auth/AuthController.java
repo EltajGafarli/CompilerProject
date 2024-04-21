@@ -2,7 +2,9 @@ package com.example.sdpproject.controller.auth;
 
 import com.example.sdpproject.dto.auth.request.LoginRequest;
 import com.example.sdpproject.dto.auth.request.RegisterRequest;
+import com.example.sdpproject.dto.user.UserDto;
 import com.example.sdpproject.service.auth.AuthService;
+import com.example.sdpproject.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -10,10 +12,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class AuthController {
     private final AuthService authService;
+    private final UserService userService;
 
     @PostMapping(path = "/register")
     public ResponseEntity<String> register(@RequestBody @Valid RegisterRequest request) {
@@ -38,4 +40,13 @@ public class AuthController {
                 .status(HttpStatus.OK)
                 .body(authService.authentication(loginRequest, request, response));
     }
+
+    @GetMapping("/user")
+    public ResponseEntity<UserDto> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity
+                .ok(
+                        userService.getCurrentUser(userDetails)
+                );
+    }
+
 }

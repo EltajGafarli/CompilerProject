@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         request -> request
                                 .requestMatchers("/api/compiler/send")
-                                .permitAll()
+                                .hasAnyRole("ADMIN", "USER")
                 )
                 .authorizeHttpRequests(
                         request -> request
@@ -60,7 +60,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/algorithms/{id}")
                                 .permitAll()
                                 .requestMatchers("/api/algorithms/{id}/submit")
-                                .permitAll()
+                                .hasAnyAuthority("ADMIN", "USER")
                                 .requestMatchers("/api/algorithms")
                                 .permitAll()
                 )
@@ -68,10 +68,6 @@ public class SecurityConfig {
                         request -> request
                                 .requestMatchers("/api/difficulty")
                                 .hasAuthority("ADMIN")
-                )
-                .authorizeHttpRequests(
-                        request -> request
-                                .requestMatchers("/api/algorithms/")
                 )
                 .authorizeHttpRequests(
                         request -> request

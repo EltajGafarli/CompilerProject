@@ -31,5 +31,12 @@ public class DifficultyController {
                 );
     }
 
+    @GetMapping(path = "/{name}")
+    public ResponseEntity<String> getDifficultByName(@PathVariable String name) {
+        return ResponseEntity
+                .ok(
+                        difficultyService.getDifficultiesByName(name)
+                );
+    }
 
 }

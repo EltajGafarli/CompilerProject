@@ -7,6 +7,7 @@ import com.example.sdpproject.exception.NotFoundException;
 import com.example.sdpproject.repository.auth.UserRepository;
 import com.example.sdpproject.repository.auth.VerificationRepository;
 import com.example.sdpproject.service.auth.VerificationService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(rollbackOn = Exception.class)
 public class VerificationServiceImpl implements VerificationService {
 
     private final UserRepository userRepository;
