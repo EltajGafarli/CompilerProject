@@ -1,6 +1,8 @@
 package com.example.sdpproject.entity.user;
 
 import com.example.sdpproject.entity.algorithm.BaseEntity;
+import com.example.sdpproject.entity.algorithm.Conversation;
+import com.example.sdpproject.entity.algorithm.Message;
 import com.example.sdpproject.entity.algorithm.Submission;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -34,6 +36,16 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     private String email;
     private boolean isEnabled = false;
 
+    @OneToMany(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            },
+            fetch = FetchType.LAZY)
+    private List<Message> messages = new ArrayList<>();
+
     @Column(columnDefinition = "varchar(250)")
     private String password;
 
@@ -62,6 +74,18 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     )
     @JsonIgnore
     private List<Submission> submissions = new ArrayList<>();
+
+    @OneToMany(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.REFRESH
+            }
+    )
+    private List<Conversation> conversations = new ArrayList<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -99,6 +123,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
         return this.isEnabled;
     }
 
+
     @Override
     public int hashCode() {
         return Objects
@@ -127,5 +152,15 @@ public class User extends BaseEntity implements UserDetails, Serializable {
         }
         this.roles.add(role);
         role.setUser(this);
+    }
+
+    public void addMessage(Message message) {
+        this.messages.add(message);
+        message.setSender(this);
+    }
+
+    public void addConversation(Conversation conversation) {
+        this.conversations.add(conversation);
+        conversation.setUser(this);
     }
 }
