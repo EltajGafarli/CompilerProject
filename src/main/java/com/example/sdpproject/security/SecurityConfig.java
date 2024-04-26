@@ -39,11 +39,6 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/api/data/user")
-                                .permitAll()
-                )
-                .authorizeHttpRequests(
-                        request -> request
                                 .requestMatchers("/api/compiler/send")
                                 .hasAnyRole("ADMIN", "USER")
                 )
@@ -72,7 +67,22 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         request -> request
                                 .requestMatchers("/api/submissions")
-                                .permitAll()
+                                .hasAnyAuthority("ADMIN", "USER")
+                )
+                .authorizeHttpRequests(
+                        request -> request
+                                .requestMatchers("/api/conversationtopic", "/api/conversationtopic/**")
+                                .hasAuthority("ADMIN")
+                )
+                .authorizeHttpRequests(
+                        request -> request
+                                .requestMatchers("/api/message", "/api/message/**")
+                                .hasAnyAuthority("ADMIN", "USER")
+                )
+                .authorizeHttpRequests(
+                        request -> request
+                                .requestMatchers("/api/conversation", "/api/conversation/**")
+                                .hasAnyAuthority("ADMIN", "USER")
                 )
                 .logout(
                         request -> request.

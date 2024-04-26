@@ -6,8 +6,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.List;
 
 public interface MessageService {
+    String deleteMessage(UserDetails userDetails, long messageId);
+
+    MessageDto updateMessage(long messageId, MessageDto messageDto);
 
     MessageDto addMessage(UserDetails userDetails, long conversationId, MessageDto messageDto);
-    List<MessageDto> getMessages(UserDetails userDetails);
+    List<MessageDto> getUserMessages(UserDetails userDetails);
+    List<MessageDto> getMessages();
+
+    MessageDto getMessageById(long id);
     MessageDto replyMessage(UserDetails userDetails, long conversationId, long messageId, MessageDto messageDto);
 }

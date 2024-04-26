@@ -10,26 +10,26 @@ import lombok.Data;
 @Data
 @Builder
 public class RegisterRequest {
-    @NotNull
-    @NotBlank
-    @NotEmpty
+    @NotEmpty(message = "Field should'nt empty")
+    @NotBlank(message = "Field should'nt blank")
+    @NotNull(message = "Field should'nt null")
     private String firstName;
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
+    @NotEmpty(message = "Field should'nt empty")
+    @NotBlank(message = "Field should'nt blank")
+    @NotNull(message = "Field should'nt null")
     private String lastName;
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
+    @NotEmpty(message = "Field should'nt empty")
+    @NotBlank(message = "Field should'nt blank")
+    @NotNull(message = "Field should'nt null")
     private String userName;
 
     @Email(message = "Email should be valid")
     private String email;
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
+    @NotEmpty(message = "Field should'nt empty")
+    @NotBlank(message = "Field should'nt blank")
+    @NotNull(message = "Field should'nt null")
     private String password;
 }

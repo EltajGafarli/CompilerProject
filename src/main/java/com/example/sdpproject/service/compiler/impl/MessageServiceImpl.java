@@ -6,7 +6,6 @@ import com.example.sdpproject.entity.algorithm.Message;
 import com.example.sdpproject.entity.user.User;
 import com.example.sdpproject.exception.NotFoundException;
 import com.example.sdpproject.repository.auth.UserRepository;
-import com.example.sdpproject.repository.compiler.AlgorithmRepository;
 import com.example.sdpproject.repository.compiler.ConversationRepository;
 import com.example.sdpproject.repository.compiler.MessageRepository;
 import com.example.sdpproject.service.compiler.MessageService;
@@ -22,7 +21,6 @@ import java.util.List;
 @Transactional(rollbackOn = Exception.class)
 public class MessageServiceImpl implements MessageService {
     private final UserRepository userRepository;
-    private AlgorithmRepository algorithmRepository;
     private final MessageRepository messageRepository;
     private final ConversationRepository conversationRepository;
 
@@ -43,12 +41,47 @@ public class MessageServiceImpl implements MessageService {
         return this.messageToMessageDto(message);
     }
 
+    @Override
+    public List<MessageDto> getUserMessages(UserDetails userDetails) {
+        User currentUser = getCurrentUser(userDetails);
+        return currentUser.getMessages()
+                .stream()
+                .map(this::messageToMessageDto)
+                .toList();
+    }
+
     public List<MessageDto> getMessages(UserDetails userDetails) {
         User user = getCurrentUser(userDetails);
         return user
                 .getMessages()
                 .stream().map(this::messageToMessageDto)
                 .toList();
+    }
+
+    @Override
+    public MessageDto getMessageById(long id) {
+        return messageRepository.findById(id)
+                .map(this::messageToMessageDto)
+                .orElseThrow(
+                () -> new NotFoundException("Message not found")
+        );
+    }
+
+    @Override
+    public List<MessageDto> getMessages() {
+        return messageRepository
+                .findAll()
+                .stream()
+                .map(this::messageToMessageDto)
+                .toList();
+    }
+
+    private MessageDto messageToDto(Message message) {
+        return MessageDto
+                .builder()
+                .message(message.getMessage())
+                .id(message.getId())
+                .build();
     }
 
 
@@ -85,5 +118,26 @@ public class MessageServiceImpl implements MessageService {
                 .orElseThrow(
                         () -> new NotFoundException("User not found")
                 );
+    }
+
+    @Override
+    public String deleteMessage(UserDetails userDetails, long messageId) {
+        messageRepository.deleteById(messageId);
+        return "Message Deleted";
+    }
+
+    @Override
+    public MessageDto updateMessage(long messageId, MessageDto messageDto) {
+        Message message = messageRepository.findById(messageId).orElseThrow(
+                () -> new NotFoundException("Message not found")
+        );
+
+        if(messageDto.getMessage() != null) {
+            message.setMessage(messageDto.getMessage());
+        }
+
+        messageRepository.save(message);
+        messageDto.setId(message.getId());
+        return messageDto;
     }
 }

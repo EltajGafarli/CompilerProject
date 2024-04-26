@@ -1,6 +1,5 @@
 package com.example.sdpproject.entity.algorithm;
 
-import com.example.sdpproject.entity.enums.ConversationTopic;
 import com.example.sdpproject.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -45,8 +44,16 @@ public class Conversation {
     )
     private User user;
 
-    @Column(name = "conversationTopic")
-    @Enumerated(value = EnumType.STRING)
+    @OneToOne(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            },
+            mappedBy = "conversation"
+    )
     private ConversationTopic conversationTopic;
 
     @Override

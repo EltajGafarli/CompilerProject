@@ -4,7 +4,6 @@ import com.example.sdpproject.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
