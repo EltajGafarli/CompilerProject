@@ -8,25 +8,16 @@ import lombok.Data;
 
 @Data
 @Builder
-public class AlgorithmRequestDto {
+public class ConversationDto {
+    private Long id;
 
     @NotEmpty(message = "Field should'nt empty")
     @NotBlank(message = "Field should'nt blank")
     @NotNull(message = "Field should'nt null")
-    private String title;
+    private String conversationName;
 
     @NotEmpty(message = "Field should'nt empty")
     @NotBlank(message = "Field should'nt blank")
     @NotNull(message = "Field should'nt null")
-    private String constraints;
-
-    @NotEmpty(message = "Field should'nt empty")
-    @NotBlank(message = "Field should'nt blank")
-    @NotNull(message = "Field should'nt null")
-    private String problemStatement;
-
-    @NotEmpty(message = "Field should'nt empty")
-    @NotBlank(message = "Field should'nt blank")
-    @NotNull(message = "Field should'nt null")
-    private String difficultyLevel;
+    private String topicName;
 }

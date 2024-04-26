@@ -81,7 +81,7 @@ public class Algorithm extends BaseEntity implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || this.getClass() == obj.getClass()) {
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
         Algorithm algorithm = (Algorithm) obj;
