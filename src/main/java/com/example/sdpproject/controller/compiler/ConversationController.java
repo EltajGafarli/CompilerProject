@@ -38,7 +38,7 @@ public class ConversationController {
     public ResponseEntity<List<ConversationDto>> getConversations() {
         return ResponseEntity
                 .ok(
-                  conversationService.getConversations()
+                        conversationService.getConversations()
                 );
     }
 

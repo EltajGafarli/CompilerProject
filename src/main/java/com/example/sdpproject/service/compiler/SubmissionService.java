@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface SubmissionService {
     SubmissionDto getSubmissionById(long id);
+
     List<SubmissionDto> getAllSubmissions();
+
     List<SubmissionDto> getAllSubmissionsOfUser(UserDetails userDetails);
 }

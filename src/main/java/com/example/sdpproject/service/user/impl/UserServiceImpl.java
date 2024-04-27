@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Transactional(rollbackOn = Exception.class)
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+
     @Override
     public UserDto getCurrentUser(UserDetails userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername())

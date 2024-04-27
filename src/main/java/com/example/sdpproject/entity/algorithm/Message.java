@@ -15,7 +15,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Builder
-public class Message extends BaseEntity{
+public class Message extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -54,7 +54,7 @@ public class Message extends BaseEntity{
     @Override
     public boolean equals(Object obj) {
 
-        if(obj == null || this.getClass() != obj.getClass()) {
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
 

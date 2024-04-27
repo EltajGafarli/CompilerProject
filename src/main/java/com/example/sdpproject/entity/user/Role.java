@@ -47,7 +47,7 @@ public class Role extends BaseEntity implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == null || obj.getClass() != this.getClass()) {
+        if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
         Role roles = (Role) obj;

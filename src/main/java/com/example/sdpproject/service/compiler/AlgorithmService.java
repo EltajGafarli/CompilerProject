@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface AlgorithmService {
     String addAlgorithm(AlgorithmRequestDto algorithmRequestDto);
+
     AlgorithmResponseDto getAlgorithm(long id);
 
     List<AlgorithmResponseDto> getAllAlgorithms();

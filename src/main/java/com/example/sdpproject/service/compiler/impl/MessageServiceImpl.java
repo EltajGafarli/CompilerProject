@@ -63,8 +63,8 @@ public class MessageServiceImpl implements MessageService {
         return messageRepository.findById(id)
                 .map(this::messageToMessageDto)
                 .orElseThrow(
-                () -> new NotFoundException("Message not found")
-        );
+                        () -> new NotFoundException("Message not found")
+                );
     }
 
     @Override
@@ -132,7 +132,7 @@ public class MessageServiceImpl implements MessageService {
                 () -> new NotFoundException("Message not found")
         );
 
-        if(messageDto.getMessage() != null) {
+        if (messageDto.getMessage() != null) {
             message.setMessage(messageDto.getMessage());
         }
 

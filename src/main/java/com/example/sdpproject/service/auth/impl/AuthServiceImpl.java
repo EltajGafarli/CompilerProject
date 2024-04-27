@@ -60,7 +60,7 @@ public class AuthServiceImpl implements AuthService {
                         .role(RoleEnum.USER)
                         .build()
         );
-        if(ADMIN_EMAIL.equals(user.getEmail())) {
+        if (ADMIN_EMAIL.equals(user.getEmail())) {
             user.addRole(
                     Role
                             .builder()
@@ -77,7 +77,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String authentication(LoginRequest request, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new NotFoundException("User not found!"));
-        if(!user.isEnabled()) {
+        if (!user.isEnabled()) {
             throw new UserNotVerifiedException("User not verified");
         }
         Authentication authenticate = authenticationManager.authenticate(

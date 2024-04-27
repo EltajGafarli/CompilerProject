@@ -37,6 +37,7 @@ public class AlgorithmController {
                         algorithmService.getAllAlgorithms()
                 );
     }
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<AlgorithmResponseDto> getAlgorithm(@PathVariable long id) {
         return ResponseEntity

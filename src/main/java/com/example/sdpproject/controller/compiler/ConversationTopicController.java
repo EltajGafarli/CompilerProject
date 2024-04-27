@@ -56,7 +56,7 @@ public class ConversationTopicController {
     public ResponseEntity<ConversationTopicDto> updateConversationTopic(@PathVariable long id, @RequestBody ConversationTopicDto conversationTopicDto) {
         return ResponseEntity
                 .ok(
-                  conversationTopicService.updateConversationTopic(id, conversationTopicDto)
+                        conversationTopicService.updateConversationTopic(id, conversationTopicDto)
                 );
     }
 }

@@ -67,7 +67,7 @@ public class Algorithm extends BaseEntity implements Serializable {
         algorithmTestCases.setAlgorithm(this);
     }
 
-    public void addSubmission(Submission submission){
+    public void addSubmission(Submission submission) {
         this.submissions.add(submission);
         submission.setAlgorithm(this);
     }

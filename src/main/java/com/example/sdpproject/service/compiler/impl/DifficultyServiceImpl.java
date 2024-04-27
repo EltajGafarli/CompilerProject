@@ -16,6 +16,7 @@ import java.util.List;
 public class DifficultyServiceImpl implements DifficultyService {
 
     private final DifficultyRepository difficultyRepository;
+
     @Override
     public String addDifficulty(String difficultyLevel) {
         Difficulty difficulty = Difficulty

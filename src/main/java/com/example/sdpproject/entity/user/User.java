@@ -132,7 +132,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     }
 
     public boolean equals(Object obj) {
-        if(obj == null || this.getClass() != obj.getClass()) {
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
         User user = (User) obj;
@@ -147,7 +147,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     }
 
     public void addRole(Role role) {
-        if(this.roles == null) {
+        if (this.roles == null) {
             this.roles = new HashSet<>();
         }
         this.roles.add(role);

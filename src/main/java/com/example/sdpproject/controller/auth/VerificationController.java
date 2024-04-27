@@ -18,7 +18,7 @@ public class VerificationController {
     @PostMapping(path = "/verify")
     public ResponseEntity<String> verify(@RequestParam String email, @RequestParam String verificationCode) {
         boolean isVerified = verificationService.verifyUser(email, verificationCode);
-        if(isVerified) {
+        if (isVerified) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("User verified successfully");

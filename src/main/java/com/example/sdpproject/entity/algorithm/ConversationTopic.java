@@ -36,15 +36,15 @@ public class ConversationTopic {
     @Override
     public int hashCode() {
         return Objects.hash(
-          id,
-          topic,
-          conversation
+                id,
+                topic,
+                conversation
         );
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == null || this.getClass() != obj.getClass()) {
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
 

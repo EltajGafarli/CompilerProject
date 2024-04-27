@@ -35,6 +35,7 @@ public class CompilerServiceImpl implements CompilerService {
 
     @Value(value = "${secrets.clientSecrets}")
     private String clientSecrets;
+
     @Override
     public AlgorithmResponse sendSolution(AlgorithmRequest algorithmRequest) {
         algorithmRequest.setClientId(clientId);
@@ -57,7 +58,7 @@ public class CompilerServiceImpl implements CompilerService {
         long memory = 0L;
         double cpuTime = 0L;
 
-        for(var test: testCases) {
+        for (var test : testCases) {
             AlgorithmRequest algorithmRequest = AlgorithmRequest
                     .builder()
                     .language(submissionRequestDto.getProgrammingLanguages().getLanguageCode())
@@ -68,12 +69,12 @@ public class CompilerServiceImpl implements CompilerService {
 
             AlgorithmResponse algorithmResponse = sendSolution(algorithmRequest);
 
-            if(algorithmResponse.getMemory() != null && algorithmResponse.getCpuTime() != null) {
+            if (algorithmResponse.getMemory() != null && algorithmResponse.getCpuTime() != null) {
                 memory += Long.parseLong(algorithmResponse.getMemory());
                 cpuTime += Double.parseDouble(algorithmResponse.getCpuTime());
             }
 
-            if(!algorithmResponse.getOutput().equals(test.getCorrectAnswer())) {
+            if (!algorithmResponse.getOutput().equals(test.getCorrectAnswer())) {
                 Submission submission = Submission.builder()
                         .cpuTime(Double.toString(cpuTime))
                         .memory(Long.toString(memory))

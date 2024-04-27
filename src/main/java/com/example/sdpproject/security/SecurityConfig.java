@@ -18,12 +18,12 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final AuthenticationProvider authenticationProvider;
     private static final String[] AUTH_WHITELIST = {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
     };
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     @SuppressWarnings("all")

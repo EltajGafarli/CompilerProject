@@ -8,5 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface CompilerService {
     AlgorithmResponse sendSolution(AlgorithmRequest algorithmRequest);
+
     SubmissionResponseDto submitSolution(UserDetails userDetails, long algorithmId, SubmissionRequestDto submissionRequestDto);
 }

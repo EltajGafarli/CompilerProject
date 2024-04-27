@@ -13,5 +13,6 @@ import org.mapstruct.ReportingPolicy;
 )
 public interface AlgorithmMapper {
     AlgorithmRequestDto algorithmToDto(Algorithm algorithm);
+
     Algorithm dtoToAlgorithm(AlgorithmRequestDto algorithmRequestDto);
 }

@@ -25,6 +25,7 @@ public class AlgorithmServiceImpl implements AlgorithmService {
     private final AlgorithmRepository algorithmRepository;
     private final AlgorithmMapper algorithmMapper;
     private final DifficultyRepository difficultyRepository;
+
     @Override
     public String addAlgorithm(AlgorithmRequestDto algorithmRequestDto) {
         Difficulty difficulty = difficultyRepository
@@ -68,19 +69,19 @@ public class AlgorithmServiceImpl implements AlgorithmService {
         Algorithm algorithm = algorithmRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Algorithm not found!")
         );
-        if(algorithmRequestDto.getTitle() != null) {
+        if (algorithmRequestDto.getTitle() != null) {
             algorithm.setTitle(algorithmRequestDto.getTitle());
         }
 
-        if(algorithmRequestDto.getConstraints() != null) {
+        if (algorithmRequestDto.getConstraints() != null) {
             algorithm.setConstraints(algorithmRequestDto.getConstraints());
         }
 
-        if(algorithmRequestDto.getProblemStatement() != null) {
+        if (algorithmRequestDto.getProblemStatement() != null) {
             algorithm.setProblemStatement(algorithmRequestDto.getProblemStatement());
         }
 
-        if(algorithmRequestDto.getDifficultyLevel() != null) {
+        if (algorithmRequestDto.getDifficultyLevel() != null) {
             Difficulty difficulty = difficultyRepository.findDifficultiesByDifficultyLevel(algorithmRequestDto.getDifficultyLevel()).orElseThrow(
                     () -> new NotFoundException("Difficulty not found")
             );

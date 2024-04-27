@@ -17,6 +17,7 @@ import java.util.List;
 @Transactional(rollbackOn = Exception.class)
 public class ConversationTopicServiceImpl implements ConversationTopicService {
     private final ConversationTopicRepository conversationTopicRepository;
+
     @Override
     public ConversationTopicDto addTopic(ConversationTopicDto conversationTopicDto) {
         conversationTopicRepository.findConversationTopicByTopic(conversationTopicDto.getTopic()).ifPresent(
@@ -43,7 +44,7 @@ public class ConversationTopicServiceImpl implements ConversationTopicService {
     @Override
     public ConversationTopicDto updateConversationTopic(long id, ConversationTopicDto conversationTopicDto) {
         ConversationTopic conversationTopic = conversationTopicRepository.findById(id).orElseThrow(() -> new NotFoundException("Conversation Not Found"));
-        if(conversationTopicDto.getTopic() != null) {
+        if (conversationTopicDto.getTopic() != null) {
             conversationTopic.setTopic(conversationTopicDto.getTopic());
         }
 

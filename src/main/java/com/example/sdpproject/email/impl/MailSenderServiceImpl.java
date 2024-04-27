@@ -15,6 +15,7 @@ import static com.example.sdpproject.util.JavaMailSenderConstants.*;
 @RequiredArgsConstructor
 public class MailSenderServiceImpl implements MailSenderService {
     private final JavaMailSender javaMailSender;
+
     @Override
     @SneakyThrows
     public void sendVerificationCodeToAdmin(User admin, String verificationCode) {
@@ -72,6 +73,7 @@ public class MailSenderServiceImpl implements MailSenderService {
         mimeMessageHelper(message, toAddress, content, subject);
         javaMailSender.send(message);
     }
+
 
     private MimeMessage message() {
         return javaMailSender.createMimeMessage();

@@ -23,12 +23,10 @@ import java.util.Objects;
 @Setter
 @Builder
 public class Conversation {
+    String conversationName;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    String conversationName;
-
     @OneToMany(
             cascade = {
                     CascadeType.DETACH,
@@ -68,7 +66,7 @@ public class Conversation {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == null || this.getClass() != obj.getClass()) {
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
 

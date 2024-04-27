@@ -11,9 +11,12 @@ public interface MessageService {
     MessageDto updateMessage(long messageId, MessageDto messageDto);
 
     MessageDto addMessage(UserDetails userDetails, long conversationId, MessageDto messageDto);
+
     List<MessageDto> getUserMessages(UserDetails userDetails);
+
     List<MessageDto> getMessages();
 
     MessageDto getMessageById(long id);
+
     MessageDto replyMessage(UserDetails userDetails, long conversationId, long messageId, MessageDto messageDto);
 }
