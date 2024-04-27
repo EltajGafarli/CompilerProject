@@ -16,7 +16,11 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(
+        columnNames = {
+                "email"
+        }
+))
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -32,7 +36,9 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     private long id;
     private String firstName;
     private String lastName;
-    private String userName;
+
+    @Column(name = "user_name", unique = true)
+    private String nameOfUser;
     private String email;
     private boolean isEnabled = false;
 
@@ -163,4 +169,5 @@ public class User extends BaseEntity implements UserDetails, Serializable {
         this.conversations.add(conversation);
         conversation.setUser(this);
     }
+
 }

@@ -61,6 +61,11 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(
                         request -> request
+                                .requestMatchers("/api/auth/user")
+                                .hasAnyAuthority("ADMIN", "USER")
+                )
+                .authorizeHttpRequests(
+                        request -> request
                                 .requestMatchers("/api/difficulty")
                                 .hasAuthority("ADMIN")
                 )
