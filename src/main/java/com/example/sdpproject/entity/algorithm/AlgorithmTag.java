@@ -18,12 +18,12 @@ import java.util.Objects;
 @Setter
 @ToString
 @Builder
-public class Difficulty extends BaseEntity implements Serializable {
+public class AlgorithmTag extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "difficulty_level")
-    private String difficultyLevel;
+    private String algorithmTag;
 
     @OneToMany(cascade = {
             CascadeType.DETACH,
@@ -31,7 +31,7 @@ public class Difficulty extends BaseEntity implements Serializable {
             CascadeType.PERSIST,
             CascadeType.REFRESH
     }, fetch = FetchType.EAGER,
-            mappedBy = "difficulty"
+            mappedBy = "algorithmTag"
     )
     @JsonIgnore
     private List<Algorithm> algorithms;
@@ -39,7 +39,7 @@ public class Difficulty extends BaseEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects
-                .hash(this.id, this.algorithms, this.difficultyLevel,
+                .hash(this.id, this.algorithms, this.algorithmTag,
                         this.getCreatedAt(), this.getUpdatedAt());
     }
 
@@ -48,13 +48,13 @@ public class Difficulty extends BaseEntity implements Serializable {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        Difficulty difficulty = (Difficulty) obj;
+        AlgorithmTag algorithmTag = (AlgorithmTag) obj;
         return Objects
-                .deepEquals(this.id, difficulty.id)
-                && Objects.deepEquals(this.difficultyLevel, difficulty.difficultyLevel)
-                && Objects.deepEquals(this.algorithms, difficulty.algorithms)
-                && Objects.deepEquals(this.getCreatedAt(), difficulty.getCreatedAt())
-                && Objects.deepEquals(this.getUpdatedAt(), difficulty.getUpdatedAt());
+                .deepEquals(this.id, algorithmTag.id)
+                && Objects.deepEquals(this.algorithmTag, algorithmTag.algorithmTag)
+                && Objects.deepEquals(this.algorithms, algorithmTag.algorithms)
+                && Objects.deepEquals(this.getCreatedAt(), algorithmTag.getCreatedAt())
+                && Objects.deepEquals(this.getUpdatedAt(), algorithmTag.getUpdatedAt());
 
     }
 }

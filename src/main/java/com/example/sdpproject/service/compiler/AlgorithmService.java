@@ -14,4 +14,6 @@ public interface AlgorithmService {
     String deleteAlgorithm(long id);
 
     AlgorithmResponseDto updateAlgorithm(long id, AlgorithmRequestDto algorithmRequestDto);
+
+    List<AlgorithmResponseDto> getAlgorithmsByAlgorithmTag(String tag);
 }

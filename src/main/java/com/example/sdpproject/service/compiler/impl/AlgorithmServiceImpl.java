@@ -5,12 +5,13 @@ import com.example.sdpproject.dto.algorithm.AlgorithmResponseDto;
 import com.example.sdpproject.dto.algorithm.AlgorithmTestCaseDto;
 import com.example.sdpproject.entity.algorithm.Algorithm;
 import com.example.sdpproject.entity.algorithm.AlgorithmTestCases;
-import com.example.sdpproject.entity.algorithm.Difficulty;
+import com.example.sdpproject.entity.algorithm.AlgorithmTag;
 import com.example.sdpproject.exception.NotFoundException;
 import com.example.sdpproject.mapper.compiler.AlgorithmMapper;
 import com.example.sdpproject.repository.compiler.AlgorithmRepository;
-import com.example.sdpproject.repository.compiler.DifficultyRepository;
+import com.example.sdpproject.repository.compiler.AlgorithmTagRepository;
 import com.example.sdpproject.service.compiler.AlgorithmService;
+import com.example.sdpproject.service.compiler.AlgorithmTagService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,18 +25,18 @@ public class AlgorithmServiceImpl implements AlgorithmService {
 
     private final AlgorithmRepository algorithmRepository;
     private final AlgorithmMapper algorithmMapper;
-    private final DifficultyRepository difficultyRepository;
+    private final AlgorithmTagRepository algorithmTagRepository;
     @Override
     public String addAlgorithm(AlgorithmRequestDto algorithmRequestDto) {
-        Difficulty difficulty = difficultyRepository
-                .findDifficultiesByDifficultyLevel(
+        AlgorithmTag algorithmTag = algorithmTagRepository
+                .findAlgorithmTagByAlgorithmTag(
                         algorithmRequestDto.getDifficultyLevel()
                 ).orElseThrow(
                         () -> new NotFoundException("Difficulty not found!")
                 );
         Algorithm algorithm = algorithmMapper.dtoToAlgorithm(algorithmRequestDto);
 
-        algorithm.setDifficulty(difficulty);
+        algorithm.setAlgorithmTag(algorithmTag);
         algorithmRepository.save(algorithm);
         return "Algorithm added successfully";
     }
@@ -81,10 +82,10 @@ public class AlgorithmServiceImpl implements AlgorithmService {
         }
 
         if(algorithmRequestDto.getDifficultyLevel() != null) {
-            Difficulty difficulty = difficultyRepository.findDifficultiesByDifficultyLevel(algorithmRequestDto.getDifficultyLevel()).orElseThrow(
+            AlgorithmTag algorithmTag = algorithmTagRepository.findAlgorithmTagByAlgorithmTag(algorithmRequestDto.getDifficultyLevel()).orElseThrow(
                     () -> new NotFoundException("Difficulty not found")
             );
-            algorithm.setDifficulty(difficulty);
+            algorithm.setAlgorithmTag(algorithmTag);
         }
 
 
@@ -92,6 +93,21 @@ public class AlgorithmServiceImpl implements AlgorithmService {
 
 
         return algorithmToAlgorithmResponseDto(savedAlgorithm);
+    }
+
+    @Override
+    public List<AlgorithmResponseDto> getAlgorithmsByAlgorithmTag(String tag) {
+        AlgorithmTag algorithmTag = algorithmTagRepository.findAlgorithmTagByAlgorithmTag(tag)
+                .orElseThrow(
+                        () -> new NotFoundException("Algorithm Not found Exception!")
+                );
+
+        return algorithmTag
+                .getAlgorithms()
+                .stream()
+                .map(this::algorithmToAlgorithmResponseDto)
+                .toList();
+
     }
 
     private AlgorithmResponseDto algorithmToAlgorithmResponseDto(Algorithm algorithm) {
@@ -105,7 +121,7 @@ public class AlgorithmServiceImpl implements AlgorithmService {
                 .problemStatement(algorithm.getProblemStatement())
                 .constraints(algorithm.getConstraints())
                 .id(algorithm.getId())
-                .difficulty(algorithm.getDifficulty().getDifficultyLevel())
+                .difficulty(algorithm.getAlgorithmTag().getAlgorithmTag())
                 .testCases(algorithmTestCaseDtos)
                 .build();
     }
@@ -117,6 +133,7 @@ public class AlgorithmServiceImpl implements AlgorithmService {
                 .correctAnswer(algorithmTestCases.getCorrectAnswer())
                 .build();
     }
+
 
 
 }

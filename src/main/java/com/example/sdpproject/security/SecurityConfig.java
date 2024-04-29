@@ -31,6 +31,7 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
+                        //AUTH
                         request -> request
                                 .requestMatchers(AUTH_WHITELIST)
                                 .permitAll()
@@ -58,6 +59,13 @@ public class SecurityConfig {
                                 .hasAnyAuthority("ADMIN", "USER")
                                 .requestMatchers("/api/algorithms")
                                 .permitAll()
+                                .requestMatchers("/api/algorithms/algorithmtag")
+                                .permitAll()
+                )
+                .authorizeHttpRequests(
+                        request -> request
+                                .requestMatchers("/api/algorithmtag/**", "/api/algorithmtag")
+                                .hasAuthority("ADMIN")
                 )
                 .authorizeHttpRequests(
                         request -> request
@@ -83,6 +91,16 @@ public class SecurityConfig {
                         request -> request
                                 .requestMatchers("/api/conversation", "/api/conversation/**")
                                 .hasAnyAuthority("ADMIN", "USER")
+                )
+                .authorizeHttpRequests(
+                        request -> request
+                                .requestMatchers("/api/admin/**")
+                                .hasAuthority("ADMIN")
+                )
+                .authorizeHttpRequests(
+                        request -> request
+                                .requestMatchers("/api/user")
+                                .hasAnyAuthority("USER", "ADMIN")
                 )
                 .logout(
                         request -> request.
