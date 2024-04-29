@@ -34,11 +34,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public UserDto addUser(RegisterRequest request) {
 
-        userRepository.findUserByEmailOrUserName(
+        userRepository.findUserByEmailOrNameOfUser(
                 request.getEmail(),
                 request.getUserName()
         ).ifPresent(
-                (data) -> new AlreadyExistException("User already exist!")
+                (data) ->{throw new AlreadyExistException("User already exist!");}
         );
 
         User user = createUser(request);
@@ -113,7 +113,7 @@ public class AdminServiceImpl implements AdminService {
     private User createUser(RegisterRequest request) {
         return User
                 .builder()
-                .userName(request.getUserName())
+                .nameOfUser(request.getUserName())
                 .email(request.getEmail())
                 .lastName(request.getLastName())
                 .firstName(request.getFirstName())

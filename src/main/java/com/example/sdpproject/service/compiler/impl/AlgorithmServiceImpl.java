@@ -25,12 +25,7 @@ public class AlgorithmServiceImpl implements AlgorithmService {
 
     private final AlgorithmRepository algorithmRepository;
     private final AlgorithmMapper algorithmMapper;
-<<<<<<< HEAD
-    private final DifficultyRepository difficultyRepository;
-
-=======
     private final AlgorithmTagRepository algorithmTagRepository;
->>>>>>> discussion
     @Override
     public String addAlgorithm(AlgorithmRequestDto algorithmRequestDto) {
         AlgorithmTag algorithmTag = algorithmTagRepository
@@ -74,25 +69,20 @@ public class AlgorithmServiceImpl implements AlgorithmService {
         Algorithm algorithm = algorithmRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Algorithm not found!")
         );
-        if (algorithmRequestDto.getTitle() != null) {
+        if(algorithmRequestDto.getTitle() != null) {
             algorithm.setTitle(algorithmRequestDto.getTitle());
         }
 
-        if (algorithmRequestDto.getConstraints() != null) {
+        if(algorithmRequestDto.getConstraints() != null) {
             algorithm.setConstraints(algorithmRequestDto.getConstraints());
         }
 
-        if (algorithmRequestDto.getProblemStatement() != null) {
+        if(algorithmRequestDto.getProblemStatement() != null) {
             algorithm.setProblemStatement(algorithmRequestDto.getProblemStatement());
         }
 
-<<<<<<< HEAD
-        if (algorithmRequestDto.getDifficultyLevel() != null) {
-            Difficulty difficulty = difficultyRepository.findDifficultiesByDifficultyLevel(algorithmRequestDto.getDifficultyLevel()).orElseThrow(
-=======
         if(algorithmRequestDto.getDifficultyLevel() != null) {
             AlgorithmTag algorithmTag = algorithmTagRepository.findAlgorithmTagByAlgorithmTag(algorithmRequestDto.getDifficultyLevel()).orElseThrow(
->>>>>>> discussion
                     () -> new NotFoundException("Difficulty not found")
             );
             algorithm.setAlgorithmTag(algorithmTag);

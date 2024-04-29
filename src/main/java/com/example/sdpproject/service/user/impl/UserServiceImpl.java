@@ -28,12 +28,8 @@ import java.util.Set;
 @Transactional(rollbackOn = Exception.class)
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-<<<<<<< HEAD
-
-=======
     private final PasswordEncoder passwordEncoder;
     private final SubmissionRepository submissionRepository;
->>>>>>> discussion
     @Override
     public UserDto getCurrentUser(UserDetails userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername())

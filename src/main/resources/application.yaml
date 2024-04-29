@@ -8,7 +8,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 190407011
-    url: jdbc:mysql://localhost:3307/sdpproject
+    url: jdbc:mysql://localhost:3306/sdpproject
 
   jpa:
     generate-ddl: true

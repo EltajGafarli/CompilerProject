@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class AuthController {
     private final AuthService authService;
-    private final UserService userService;
     private final PasswordResetTokenService passwordResetTokenService;
 
     @PostMapping(path = "/register")
@@ -54,6 +53,14 @@ public class AuthController {
                                 passwordResetDto.getResetToken(),
                                 passwordResetDto.getNewPassword()
                         )
+                );
+    }
+
+    @GetMapping(path = "/reset_request")
+    public ResponseEntity<String> resetRequest(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity
+                .ok(
+                        passwordResetTokenService.generateResetToken(userDetails)
                 );
     }
 

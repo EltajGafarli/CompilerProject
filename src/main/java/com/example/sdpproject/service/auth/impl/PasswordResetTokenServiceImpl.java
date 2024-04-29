@@ -1,5 +1,6 @@
 package com.example.sdpproject.service.auth.impl;
 
+import com.example.sdpproject.email.MailSenderService;
 import com.example.sdpproject.entity.user.PasswordResetToken;
 import com.example.sdpproject.entity.user.User;
 import com.example.sdpproject.exception.NotFoundException;
@@ -8,6 +9,7 @@ import com.example.sdpproject.repository.auth.UserRepository;
 import com.example.sdpproject.service.auth.PasswordResetTokenService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +24,24 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final MailSenderService mailSenderService;
     private final Random random = new Random();
 
     @Override
-    public String generateResetToken(User user) {
+    public String generateResetToken(UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(
+                        () -> new NotFoundException("User not found")
+                );
         String resetToken = generateRandomToken();
         PasswordResetToken passwordResetToken = getPasswordResetToken(user, resetToken);
+        sendPasswordToken(user, passwordResetToken.getResetPasswordToken());
         passwordResetTokenRepository.save(passwordResetToken);
-        return resetToken;
+        return "Reset token sent successfully";
+    }
+
+    public void sendPasswordToken(User user, String passwordToken) {
+        mailSenderService.sendPasswordResetTokenToUser(user, passwordToken);
     }
 
     @Override
