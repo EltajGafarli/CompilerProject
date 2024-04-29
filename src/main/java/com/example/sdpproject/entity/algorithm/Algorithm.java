@@ -46,8 +46,8 @@ public class Algorithm extends BaseEntity implements Serializable {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    @JoinColumn(name = "difficulty_id", referencedColumnName = "id")
-    private Difficulty difficulty;
+    @JoinColumn(name = "algorithm_tag_id", referencedColumnName = "id")
+    private AlgorithmTag algorithmTag;
 
     @OneToMany(
             cascade = {
@@ -75,7 +75,7 @@ public class Algorithm extends BaseEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.id, this.title, this.problemStatement, this.testCases, this.constraints, this.difficulty,
+                this.id, this.title, this.problemStatement, this.testCases, this.constraints, this.algorithmTag,
                 this.getCreatedAt(), this.getUpdatedAt());
     }
 
@@ -91,7 +91,7 @@ public class Algorithm extends BaseEntity implements Serializable {
                 && Objects.deepEquals(problemStatement, algorithm.problemStatement)
                 && Objects.deepEquals(testCases, algorithm.testCases)
                 && Objects.deepEquals(constraints, algorithm.constraints)
-                && Objects.deepEquals(difficulty, algorithm.difficulty)
+                && Objects.deepEquals(algorithmTag, algorithm.algorithmTag)
                 && Objects.deepEquals(this.getCreatedAt(), algorithm.getCreatedAt())
                 && Objects.deepEquals(this.getUpdatedAt(), algorithm.getUpdatedAt());
     }

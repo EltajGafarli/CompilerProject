@@ -45,13 +45,6 @@ public class AuthController {
                 .body(authService.authentication(loginRequest, request, response));
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<UserDto> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity
-                .ok(
-                        userService.getCurrentUser(userDetails)
-                );
-    }
 
     @PostMapping(path = "/reset")
     public ResponseEntity<String> resetPassword(@RequestBody PasswordResetDto passwordResetDto) {

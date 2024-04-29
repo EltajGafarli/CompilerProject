@@ -81,4 +81,13 @@ public class AlgorithmController {
                 );
     }
 
+
+    @GetMapping(path = "/algorithmtag")
+    public ResponseEntity<List<AlgorithmResponseDto>> getAlgorithmsByTag(@RequestParam String tag) {
+        return ResponseEntity
+                .ok(
+                        this.algorithmService.getAlgorithmsByAlgorithmTag(tag)
+                );
+    }
+
 }
