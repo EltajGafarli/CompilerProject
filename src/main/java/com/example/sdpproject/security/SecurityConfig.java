@@ -104,7 +104,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/api/user")
+                                .requestMatchers("/api/user/**", "/api/user")
                                 .hasAnyAuthority("USER", "ADMIN")
                 )
                 .logout(
