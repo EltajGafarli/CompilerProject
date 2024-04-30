@@ -38,7 +38,7 @@ public class AdminController {
     public ResponseEntity<String> addUserRole(@PathVariable(name = "id") long userId, @RequestParam RoleEnum roleEnum) {
         return ResponseEntity
                 .ok(
-                  adminService.addUserRole(userId, roleEnum)
+                        adminService.addUserRole(userId, roleEnum)
                 );
     }
 

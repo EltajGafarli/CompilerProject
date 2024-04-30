@@ -45,6 +45,14 @@ spring:
     enabled: false
     change-log: db/changelog-master.yaml
 
+  servlet:
+    multipart:
+      max-request-size: 2MB
+      max-file-size: 2MB
+  web:
+    resources:
+      static-locations: file:src/main/resources/static/
+
 
 admin:
   email: "eltajgafarli@gmail.com"

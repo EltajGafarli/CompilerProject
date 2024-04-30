@@ -56,6 +56,17 @@ public class Algorithm extends BaseEntity implements Serializable {
                     CascadeType.PERSIST,
                     CascadeType.REFRESH
             },
+            mappedBy = "algorithm"
+    )
+    private Set<AlgorithmImage> algorithmImages = new HashSet<>();
+
+    @OneToMany(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            },
             mappedBy = "algorithm",
             fetch = FetchType.LAZY
     )
@@ -70,6 +81,11 @@ public class Algorithm extends BaseEntity implements Serializable {
     public void addSubmission(Submission submission) {
         this.submissions.add(submission);
         submission.setAlgorithm(this);
+    }
+
+    public void addImage(AlgorithmImage algorithmImage) {
+        this.algorithmImages.add(algorithmImage);
+        algorithmImage.setAlgorithm(this);
     }
 
     @Override
@@ -93,7 +109,8 @@ public class Algorithm extends BaseEntity implements Serializable {
                 && Objects.deepEquals(constraints, algorithm.constraints)
                 && Objects.deepEquals(algorithmTag, algorithm.algorithmTag)
                 && Objects.deepEquals(this.getCreatedAt(), algorithm.getCreatedAt())
-                && Objects.deepEquals(this.getUpdatedAt(), algorithm.getUpdatedAt());
+                && Objects.deepEquals(this.getUpdatedAt(), algorithm.getUpdatedAt())
+                && Objects.deepEquals(this.algorithmImages, algorithm.algorithmImages);
     }
 
 }

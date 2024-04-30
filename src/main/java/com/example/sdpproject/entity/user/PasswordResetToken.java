@@ -33,7 +33,7 @@ public class PasswordResetToken {
 
     @Override
     public boolean equals(Object object) {
-        if(object == null || this.getClass() != object.getClass()) {
+        if (object == null || this.getClass() != object.getClass()) {
             return false;
         }
 

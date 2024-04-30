@@ -4,12 +4,10 @@ import com.example.sdpproject.dto.algorithm.AlgorithmResponseDto;
 import com.example.sdpproject.dto.user.UserDto;
 import com.example.sdpproject.dto.user.UserRequestDto;
 import com.example.sdpproject.service.user.UserService;
-import feign.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -69,9 +67,6 @@ public class UserController {
                         userService.findSolvedAlgorithms(userDetails)
                 );
     }
-
-
-
 
 
 }

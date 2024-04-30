@@ -13,7 +13,6 @@ import com.example.sdpproject.exception.NotFoundException;
 import com.example.sdpproject.repository.auth.UserRepository;
 import com.example.sdpproject.repository.compiler.SubmissionRepository;
 import com.example.sdpproject.service.user.UserService;
-import jakarta.mail.search.SearchTerm;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final SubmissionRepository submissionRepository;
+
     @Override
     public UserDto getCurrentUser(UserDetails userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername())
@@ -44,21 +44,21 @@ public class UserServiceImpl implements UserService {
         User currentUser = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(
                 () -> new NotFoundException("User not found")
         );
-        if(userRequestDto.getFirstName() != null) {
+        if (userRequestDto.getFirstName() != null) {
             currentUser.setFirstName(
                     userRequestDto.getFirstName()
             );
         }
 
-        if(userRequestDto.getLastName() != null) {
+        if (userRequestDto.getLastName() != null) {
             currentUser.setLastName(userRequestDto.getLastName());
         }
 
-        if(userRequestDto.getEmail() != null) {
+        if (userRequestDto.getEmail() != null) {
             currentUser.setEmail(userRequestDto.getEmail());
         }
 
-        if(userRequestDto.getPassword() != null) {
+        if (userRequestDto.getPassword() != null) {
             currentUser.setPassword(
                     passwordEncoder.encode(userRequestDto.getPassword())
             );
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
                 () -> new NotFoundException("User not found")
         );
 
-        return (long)user.getSubmissions().size();
+        return (long) user.getSubmissions().size();
     }
 
     @Override
@@ -149,14 +149,21 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     private UserDto userToUserDto(User user) {
         return UserDto
                 .builder()
-                .userName(user.getUsername())
+                .userName(user.getNameOfUser())
                 .email(user.getEmail())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
+                .roleName(user
+                        .getRoles()
+                        .stream()
+                        .map(
+                                role -> role.getRole().name()
+                        )
+                        .toList()
+                )
                 .build();
     }
 

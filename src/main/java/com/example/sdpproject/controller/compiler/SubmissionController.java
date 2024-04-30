@@ -2,7 +2,6 @@ package com.example.sdpproject.controller.compiler;
 
 import com.example.sdpproject.dto.algorithm.SubmissionDto;
 import com.example.sdpproject.service.compiler.SubmissionService;
-import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,13 +19,11 @@ public class SubmissionController {
     private final SubmissionService submissionService;
 
     @GetMapping
-    @PermitAll
     public List<SubmissionDto> getAllSubmissions(@AuthenticationPrincipal UserDetails userDetails) {
         return submissionService.getAllSubmissionsOfUser(userDetails);
     }
 
     @GetMapping(path = "/{id}")
-    @PermitAll
     public SubmissionDto getSubmissionById(@PathVariable long id) {
         return this.submissionService.getSubmissionById(id);
     }

@@ -12,5 +12,6 @@ public interface PasswordResetTokenService {
     void deleteResetToken(String resetToken);
 
     String generateRandomToken();
+
     String resetPassword(String resetToken, String newPassword);
 }

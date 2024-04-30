@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.Serial;
 import java.util.List;
 
 @Service
@@ -31,6 +30,7 @@ public class AdminServiceImpl implements AdminService {
     private final PasswordEncoder passwordEncoder;
     private final VerificationService verificationService;
     private final RoleRepository roleRepository;
+
     @Override
     public UserDto addUser(RegisterRequest request) {
 
@@ -38,7 +38,9 @@ public class AdminServiceImpl implements AdminService {
                 request.getEmail(),
                 request.getUserName()
         ).ifPresent(
-                (data) ->{throw new AlreadyExistException("User already exist!");}
+                (data) -> {
+                    throw new AlreadyExistException("User already exist!");
+                }
         );
 
         User user = createUser(request);
@@ -56,6 +58,7 @@ public class AdminServiceImpl implements AdminService {
                 .lastName(savedUser.getLastName())
                 .firstName(savedUser.getFirstName())
                 .email(savedUser.getEmail())
+                .roleName(savedUser.getRoles().stream().map(role -> role.getRole().name()).toList())
                 .build();
     }
 
@@ -94,7 +97,7 @@ public class AdminServiceImpl implements AdminService {
 
         boolean removed = user.getRoles().removeIf(currentRole -> currentRole.equals(role));
 
-        if(removed) {
+        if (removed) {
             userRepository.save(user);
         }
         return "Role deleted successfully";
@@ -129,6 +132,13 @@ public class AdminServiceImpl implements AdminService {
                 .email(user.getEmail())
                 .userName(user.getUsername())
                 .lastName(user.getLastName())
+                .roleName(
+                        user
+                                .getRoles()
+                                .stream()
+                                .map(role -> role.getRole().name())
+                                .toList()
+                )
                 .build();
     }
 }

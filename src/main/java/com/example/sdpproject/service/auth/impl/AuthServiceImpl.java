@@ -2,6 +2,7 @@ package com.example.sdpproject.service.auth.impl;
 
 import com.example.sdpproject.dto.auth.request.LoginRequest;
 import com.example.sdpproject.dto.auth.request.RegisterRequest;
+import com.example.sdpproject.dto.user.JwtResponseDto;
 import com.example.sdpproject.dto.user.UserDto;
 import com.example.sdpproject.email.MailSenderService;
 import com.example.sdpproject.entity.enums.RoleEnum;
@@ -11,22 +12,17 @@ import com.example.sdpproject.exception.AlreadyExistException;
 import com.example.sdpproject.exception.NotFoundException;
 import com.example.sdpproject.exception.UserNotVerifiedException;
 import com.example.sdpproject.mapper.auth.UserMapper;
-import com.example.sdpproject.mapper.auth.UserMapperImpl;
 import com.example.sdpproject.repository.auth.RoleRepository;
 import com.example.sdpproject.repository.auth.UserRepository;
 import com.example.sdpproject.service.auth.AuthService;
+import com.example.sdpproject.service.auth.JwtService;
 import com.example.sdpproject.service.auth.VerificationService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
@@ -45,6 +41,7 @@ public class AuthServiceImpl implements AuthService {
     private final VerificationService verificationService;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final JwtService jwtService;
 
     @Value(value = "${admin.email}")
     private String ADMIN_EMAIL;
@@ -54,7 +51,9 @@ public class AuthServiceImpl implements AuthService {
 
         userRepository.findUserByEmailOrNameOfUser(request.getEmail(), request.getUserName())
                 .ifPresent(
-                        data -> {throw new AlreadyExistException("User already exist!");}
+                        data -> {
+                            throw new AlreadyExistException("User already exist!");
+                        }
                 );
 
         User user = getUser(request);
@@ -79,21 +78,21 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public UserDto authentication(LoginRequest request, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new NotFoundException("User not found!"));
-        if (!user.isEnabled()) {
-            throw new UserNotVerifiedException("User not verified");
-        }
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail().trim(), request.getPassword().trim())
+    public JwtResponseDto authentication(LoginRequest loginRequest) {
+
+        userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(
+                () -> new NotFoundException("User not found")
         );
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
-        context.setAuthentication(authenticate);
-        securityContextRepository.saveContext(
-                context, httpServletRequest, httpServletResponse);
-        log.info(user.getNameOfUser());
-        return this
-                .getUserDto(user);
+
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+        String email = loginRequest.getEmail();
+        User user = getUserByEmail(email);
+        if (user.isEnabled()) {
+            String jwt = jwtService.generateToken(user);
+            return getToken(jwt);
+        }
+
+        throw new UserNotVerifiedException("User is not verified. Please verify your account.");
     }
 
 
@@ -118,5 +117,16 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
+
+    private JwtResponseDto getToken(String jwt) {
+        return JwtResponseDto.builder()
+                .accessToken(jwt)
+                .build();
+    }
+
+    private User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User not found with this email."));
+    }
 
 }

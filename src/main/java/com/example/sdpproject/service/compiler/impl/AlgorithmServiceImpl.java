@@ -4,14 +4,13 @@ import com.example.sdpproject.dto.algorithm.AlgorithmRequestDto;
 import com.example.sdpproject.dto.algorithm.AlgorithmResponseDto;
 import com.example.sdpproject.dto.algorithm.AlgorithmTestCaseDto;
 import com.example.sdpproject.entity.algorithm.Algorithm;
-import com.example.sdpproject.entity.algorithm.AlgorithmTestCases;
 import com.example.sdpproject.entity.algorithm.AlgorithmTag;
+import com.example.sdpproject.entity.algorithm.AlgorithmTestCases;
 import com.example.sdpproject.exception.NotFoundException;
 import com.example.sdpproject.mapper.compiler.AlgorithmMapper;
 import com.example.sdpproject.repository.compiler.AlgorithmRepository;
 import com.example.sdpproject.repository.compiler.AlgorithmTagRepository;
 import com.example.sdpproject.service.compiler.AlgorithmService;
-import com.example.sdpproject.service.compiler.AlgorithmTagService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +25,7 @@ public class AlgorithmServiceImpl implements AlgorithmService {
     private final AlgorithmRepository algorithmRepository;
     private final AlgorithmMapper algorithmMapper;
     private final AlgorithmTagRepository algorithmTagRepository;
+
     @Override
     public String addAlgorithm(AlgorithmRequestDto algorithmRequestDto) {
         AlgorithmTag algorithmTag = algorithmTagRepository
@@ -69,19 +69,19 @@ public class AlgorithmServiceImpl implements AlgorithmService {
         Algorithm algorithm = algorithmRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Algorithm not found!")
         );
-        if(algorithmRequestDto.getTitle() != null) {
+        if (algorithmRequestDto.getTitle() != null) {
             algorithm.setTitle(algorithmRequestDto.getTitle());
         }
 
-        if(algorithmRequestDto.getConstraints() != null) {
+        if (algorithmRequestDto.getConstraints() != null) {
             algorithm.setConstraints(algorithmRequestDto.getConstraints());
         }
 
-        if(algorithmRequestDto.getProblemStatement() != null) {
+        if (algorithmRequestDto.getProblemStatement() != null) {
             algorithm.setProblemStatement(algorithmRequestDto.getProblemStatement());
         }
 
-        if(algorithmRequestDto.getDifficultyLevel() != null) {
+        if (algorithmRequestDto.getDifficultyLevel() != null) {
             AlgorithmTag algorithmTag = algorithmTagRepository.findAlgorithmTagByAlgorithmTag(algorithmRequestDto.getDifficultyLevel()).orElseThrow(
                     () -> new NotFoundException("Difficulty not found")
             );
@@ -133,7 +133,6 @@ public class AlgorithmServiceImpl implements AlgorithmService {
                 .correctAnswer(algorithmTestCases.getCorrectAnswer())
                 .build();
     }
-
 
 
 }

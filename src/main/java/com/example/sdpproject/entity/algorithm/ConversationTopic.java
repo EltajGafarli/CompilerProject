@@ -1,6 +1,5 @@
 package com.example.sdpproject.entity.algorithm;
 
-import com.example.sdpproject.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

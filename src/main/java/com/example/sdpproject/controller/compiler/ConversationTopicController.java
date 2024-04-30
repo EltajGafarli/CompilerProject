@@ -2,7 +2,6 @@ package com.example.sdpproject.controller.compiler;
 
 import com.example.sdpproject.dto.algorithm.ConversationTopicDto;
 import com.example.sdpproject.service.compiler.ConversationTopicService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

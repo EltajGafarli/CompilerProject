@@ -16,6 +16,7 @@ import java.util.List;
 public class AlgorithmTagServiceImpl implements AlgorithmTagService {
 
     private final AlgorithmTagRepository algorithmTagRepository;
+
     @Override
     public String addAlgorithmTag(String difficultyLevel) {
         AlgorithmTag algorithmTag = AlgorithmTag
@@ -47,7 +48,7 @@ public class AlgorithmTagServiceImpl implements AlgorithmTagService {
                         () -> new NotFoundException("AlgorithmTag not found")
                 );
 
-        if(newTagName != null) {
+        if (newTagName != null) {
             algorithmTag.setAlgorithmTag(newTagName);
         }
         algorithmTagRepository.save(algorithmTag);

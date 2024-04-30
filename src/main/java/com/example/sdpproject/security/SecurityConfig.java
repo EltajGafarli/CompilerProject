@@ -1,5 +1,6 @@
 package com.example.sdpproject.security;
 
+import com.example.sdpproject.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 @Configuration
@@ -24,6 +26,7 @@ public class SecurityConfig {
             "/swagger-ui.html",
     };
     private final AuthenticationProvider authenticationProvider;
+    private final JwtAuthFilter jwtAuthFiler;
 
     @Bean
     @SuppressWarnings("all")
@@ -37,6 +40,10 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/verification/verify")
                                 .permitAll()
+                                .requestMatchers("/api/auth/reset")
+                                .authenticated()
+                                .requestMatchers("/api/auth/reset_request")
+                                .authenticated()
                 )
                 .authorizeHttpRequests(
                         request -> request
@@ -74,12 +81,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/api/difficulty")
-                                .hasAuthority("ADMIN")
-                )
-                .authorizeHttpRequests(
-                        request -> request
-                                .requestMatchers("/api/submissions")
+                                .requestMatchers("/api/submissions", "/api/submissions/**")
                                 .hasAnyAuthority("ADMIN", "USER")
                 )
                 .authorizeHttpRequests(
@@ -104,8 +106,19 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/api/user/**", "/api/user")
+                                .requestMatchers("/api/user", "/api/user/**")
                                 .hasAnyAuthority("USER", "ADMIN")
+                )
+                .authorizeHttpRequests(
+                        request -> request
+                                .requestMatchers("/api/images/{algorithmId}/upload")
+                                .hasAuthority("ADMIN")
+                                .requestMatchers("/api/images/{algorithmId}")
+                                .permitAll()
+                )
+                .authorizeHttpRequests(
+                        request -> request.requestMatchers("/files/**")
+                                .permitAll()
                 )
                 .logout(
                         request -> request.
@@ -113,7 +126,11 @@ public class SecurityConfig {
                                 .logoutSuccessHandler(
                                         new HttpStatusReturningLogoutSuccessHandler()
                                 ).logoutSuccessUrl("/")
-                ).authenticationProvider(authenticationProvider);
+                )
+                .sessionManagement()
+                .and()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFiler, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

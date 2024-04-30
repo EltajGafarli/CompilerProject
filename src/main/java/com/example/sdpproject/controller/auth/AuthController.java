@@ -3,13 +3,9 @@ package com.example.sdpproject.controller.auth;
 import com.example.sdpproject.dto.auth.request.LoginRequest;
 import com.example.sdpproject.dto.auth.request.PasswordResetDto;
 import com.example.sdpproject.dto.auth.request.RegisterRequest;
-import com.example.sdpproject.dto.user.UserDto;
-import com.example.sdpproject.repository.auth.PasswordResetTokenRepository;
+import com.example.sdpproject.dto.user.JwtResponseDto;
 import com.example.sdpproject.service.auth.AuthService;
 import com.example.sdpproject.service.auth.PasswordResetTokenService;
-import com.example.sdpproject.service.user.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,10 +34,10 @@ public class AuthController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<UserDto> login(@RequestBody @Valid LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<JwtResponseDto> login(@RequestBody @Valid LoginRequest loginRequest) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(authService.authentication(loginRequest, request, response));
+                .body(authService.authentication(loginRequest));
     }
 
 
