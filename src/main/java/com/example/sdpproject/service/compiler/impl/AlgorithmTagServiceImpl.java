@@ -1,6 +1,7 @@
 package com.example.sdpproject.service.compiler.impl;
 
 import com.example.sdpproject.entity.algorithm.AlgorithmTag;
+import com.example.sdpproject.exception.AlreadyExistException;
 import com.example.sdpproject.exception.NotFoundException;
 import com.example.sdpproject.repository.compiler.AlgorithmTagRepository;
 import com.example.sdpproject.service.compiler.AlgorithmTagService;
@@ -8,6 +9,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.rmi.AlreadyBoundException;
 import java.util.List;
 
 @Service
@@ -19,6 +21,12 @@ public class AlgorithmTagServiceImpl implements AlgorithmTagService {
 
     @Override
     public String addAlgorithmTag(String difficultyLevel) {
+        algorithmTagRepository.findAlgorithmTagByAlgorithmTag(difficultyLevel).ifPresent(
+                data -> {
+                    throw new AlreadyExistException("Tag already exist!");
+                }
+
+        );
         AlgorithmTag algorithmTag = AlgorithmTag
                 .builder()
                 .algorithmTag(difficultyLevel)
@@ -56,11 +64,13 @@ public class AlgorithmTagServiceImpl implements AlgorithmTagService {
     }
 
     @Override
+    @Transactional
     public String deleteAlgorithmTag(String tag) {
         AlgorithmTag algorithmTag = algorithmTagRepository.findAlgorithmTagByAlgorithmTag(tag)
                 .orElseThrow(
                         () -> new NotFoundException("Algorithm Not found")
                 );
+
         algorithmTagRepository.delete(algorithmTag);
         return "Algorithm tag deleted";
     }

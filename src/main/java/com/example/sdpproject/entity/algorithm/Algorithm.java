@@ -43,8 +43,8 @@ public class Algorithm extends BaseEntity implements Serializable {
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
             },
             fetch = FetchType.EAGER
     )

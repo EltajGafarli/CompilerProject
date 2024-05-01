@@ -32,6 +32,7 @@ public class VerificationServiceImpl implements VerificationService {
                 && user.getId() == verification.getUser().getId()) {
             user.setEnabled(true);
             userRepository.save(user);
+            verification.setUser(null);
             verificationRepository.delete(verification);
             return true;
         }

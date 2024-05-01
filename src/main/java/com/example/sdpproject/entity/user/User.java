@@ -44,10 +44,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
 
     @OneToMany(
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             },
             fetch = FetchType.LAZY)
     private List<Message> messages = new ArrayList<>();

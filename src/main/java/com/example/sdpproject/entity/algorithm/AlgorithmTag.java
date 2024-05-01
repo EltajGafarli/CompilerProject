@@ -26,10 +26,7 @@ public class AlgorithmTag extends BaseEntity implements Serializable {
     private String algorithmTag;
 
     @OneToMany(cascade = {
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH
+            CascadeType.ALL
     }, fetch = FetchType.EAGER,
             mappedBy = "algorithmTag"
     )

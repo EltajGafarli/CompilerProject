@@ -62,7 +62,11 @@ public class AlgorithmServiceImpl implements AlgorithmService {
     @Transactional
     public String deleteAlgorithm(long id) {
         Algorithm algorithm = this.algorithmRepository.findById(id).orElseThrow(() -> new NotFoundException("Algorithm not found"));
-        this.algorithmRepository.deleteById(id);
+        if (algorithm.getAlgorithmTag() != null) {
+            algorithm.getAlgorithmTag().setAlgorithms(null);
+        }
+
+        algorithmRepository.delete(algorithm);
         this.algorithmRepository.flush();
         return "Algorithm deleted successfully";
     }

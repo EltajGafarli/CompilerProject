@@ -74,6 +74,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(
                 () -> new NotFoundException("User not found")
         );
+        
+
 
         userRepository.delete(user);
         return "User deleted successfully";
