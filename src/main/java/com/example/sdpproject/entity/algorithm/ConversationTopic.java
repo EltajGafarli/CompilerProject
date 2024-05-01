@@ -1,5 +1,6 @@
 package com.example.sdpproject.entity.algorithm;
 
+import com.example.sdpproject.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,9 +29,15 @@ public class ConversationTopic {
     @OneToOne
     private Conversation conversation;
 
-    @ManyToOne(
-            cascade = CascadeType.ALL
-    )
+//    @ManyToOne(
+//            cascade = {
+//                    CascadeType.DETACH,
+//                    CascadeType.MERGE,
+//                    CascadeType.PERSIST,
+//                    CascadeType.REFRESH
+//            }
+//    )
+//    private User user;
 
     @Override
     public int hashCode() {

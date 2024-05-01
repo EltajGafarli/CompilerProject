@@ -36,12 +36,22 @@ public class Submission extends BaseEntity implements Serializable {
 
     private String programmingLanguage;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.REFRESH,
+            CascadeType.MERGE,
+            CascadeType.DETACH
+    })
     @JsonIgnore
     private Algorithm algorithm;
 
     @ManyToOne(
-            cascade = CascadeType.ALL
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH,
+                    CascadeType.MERGE,
+                    CascadeType.DETACH
+            }
     )
     private User user;
 

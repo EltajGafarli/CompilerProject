@@ -1,8 +1,8 @@
 server:
-  port: 8088
   servlet:
     session:
-      timeout: 1440m
+      timeout: 86400
+  port: 8088
 
 spring:
   application:
@@ -11,7 +11,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 190407011
-    url: jdbc:mysql://localhost:3306/sdpproject
+    url: jdbc:mysql://localhost:3306/sdpbase
 
   jpa:
     generate-ddl: true
@@ -45,6 +45,8 @@ spring:
     enabled: false
     change-log: db/changelog-master.yaml
 
+
+
   servlet:
     multipart:
       max-request-size: 2MB
@@ -53,9 +55,8 @@ spring:
     resources:
       static-locations: file:src/main/resources/static/
 
-
 admin:
-  email: "eltajgafarli@gmail.com"
+  email: "ferid-memmedli5@outlook.com"
 
 secrets:
   clientId: c1b4ac0ed062629ee611c80f41c9cd57

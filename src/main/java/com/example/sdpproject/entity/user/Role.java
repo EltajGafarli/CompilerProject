@@ -33,7 +33,12 @@ public class Role extends BaseEntity implements Serializable {
     private RoleEnum role;
 
     @ManyToOne(
-            cascade = CascadeType.ALL
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH,
+                    CascadeType.MERGE,
+                    CascadeType.DETACH
+            }
     )
     @JsonIgnore
     private User user;

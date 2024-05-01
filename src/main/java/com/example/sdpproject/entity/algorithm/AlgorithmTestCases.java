@@ -23,7 +23,12 @@ public class AlgorithmTestCases extends BaseEntity implements Serializable {
     private long id;
 
     @ManyToOne(
-            cascade = CascadeType.ALL
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.REFRESH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST
+            }
     )
     private Algorithm algorithm;
 

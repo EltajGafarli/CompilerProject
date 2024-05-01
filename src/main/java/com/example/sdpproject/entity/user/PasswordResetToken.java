@@ -20,7 +20,12 @@ public class PasswordResetToken {
     private String resetPasswordToken;
 
     @OneToOne(
-            cascade = CascadeType.ALL,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH,
+                    CascadeType.MERGE,
+                    CascadeType.DETACH
+            },
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "user_id")

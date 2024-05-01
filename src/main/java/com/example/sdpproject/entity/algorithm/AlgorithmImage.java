@@ -19,7 +19,12 @@ public class AlgorithmImage extends BaseEntity {
     private String imageUrl;
 
     @ManyToOne(
-            cascade = CascadeType.ALL
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            }
     )
     private Algorithm algorithm;
 

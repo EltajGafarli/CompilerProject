@@ -32,10 +32,7 @@ public class Algorithm extends BaseEntity implements Serializable {
 
     @OneToMany(
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             },
             mappedBy = "algorithm"
     )
@@ -43,7 +40,12 @@ public class Algorithm extends BaseEntity implements Serializable {
     private Set<AlgorithmTestCases> testCases = new HashSet<>();
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            },
             fetch = FetchType.EAGER
     )
     @JoinColumn(name = "algorithm_tag_id", referencedColumnName = "id")
@@ -51,10 +53,7 @@ public class Algorithm extends BaseEntity implements Serializable {
 
     @OneToMany(
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             },
             mappedBy = "algorithm"
     )
@@ -62,10 +61,7 @@ public class Algorithm extends BaseEntity implements Serializable {
 
     @OneToMany(
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             },
             mappedBy = "algorithm",
             fetch = FetchType.LAZY

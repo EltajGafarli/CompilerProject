@@ -57,10 +57,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
 
     @OneToMany(
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
+                    CascadeType.ALL
             },
             fetch = FetchType.EAGER,
             orphanRemoval = true,
@@ -70,10 +67,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
 
     @OneToMany(
             cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH,
-                    CascadeType.MERGE
+                    CascadeType.ALL
             },
             mappedBy = "user",
             fetch = FetchType.LAZY
