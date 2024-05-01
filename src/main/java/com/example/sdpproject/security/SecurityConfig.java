@@ -32,7 +32,7 @@ public class SecurityConfig {
     @SuppressWarnings("all")
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
+                .cors(cors -> cors.disable())
                 .authorizeHttpRequests(
                         //AUTH
                         request -> request
