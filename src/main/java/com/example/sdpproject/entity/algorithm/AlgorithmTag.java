@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,7 +32,20 @@ public class AlgorithmTag extends BaseEntity implements Serializable {
             mappedBy = "algorithmTag"
     )
     @JsonIgnore
-    private List<Algorithm> algorithms;
+    private List<Algorithm> algorithms = new ArrayList<>();
+
+
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            mappedBy = "algorithmTag"
+    )
+    private Subject subject;
+
+
+    public void addAlgorithm(Algorithm algorithm) {
+        this.algorithms.add(algorithm);
+        algorithm.setAlgorithmTag(this);
+    }
 
     @Override
     public int hashCode() {

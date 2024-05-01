@@ -72,6 +72,7 @@ public class AlgorithmTagServiceImpl implements AlgorithmTagService {
                 );
 
         algorithmTagRepository.delete(algorithmTag);
+        this.algorithmTagRepository.flush();
         return "Algorithm tag deleted";
     }
 }

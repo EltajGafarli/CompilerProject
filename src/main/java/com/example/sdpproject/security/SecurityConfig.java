@@ -41,9 +41,9 @@ public class SecurityConfig {
                                 .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/verification/verify")
                                 .permitAll()
                                 .requestMatchers("/api/auth/reset")
-                                .authenticated()
+                                .permitAll()
                                 .requestMatchers("/api/auth/reset_request")
-                                .authenticated()
+                                .permitAll()
                 )
                 .authorizeHttpRequests(
                         request -> request
@@ -118,6 +118,22 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(
                         request -> request.requestMatchers("/files/**")
+                                .permitAll()
+                )
+                .authorizeHttpRequests(
+                        request -> request.requestMatchers("/api/subjects/create")
+                                .hasAuthority("ADMIN")
+                                .requestMatchers("/api/subjects/{subjectId}/{algorithmId}")
+                                .hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/subjects/{subjectId}")
+                                .permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/api/subjects/{subjectId}")
+                                .hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/subjects/{subjectId}")
+                                .hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/subjects")
+                                .permitAll()
+                                .requestMatchers("/api/contact")
                                 .permitAll()
                 )
                 .logout(

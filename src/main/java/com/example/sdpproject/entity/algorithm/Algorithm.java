@@ -69,6 +69,17 @@ public class Algorithm extends BaseEntity implements Serializable {
     @JsonIgnore
     private List<Submission> submissions = new ArrayList<>();
 
+    @ManyToOne(
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            }
+    )
+    @JoinColumn(name = "subject_id", referencedColumnName = "id")
+    private Subject subject;
+
     public void addTestCase(AlgorithmTestCases algorithmTestCases) {
         this.testCases.add(algorithmTestCases);
         algorithmTestCases.setAlgorithm(this);
