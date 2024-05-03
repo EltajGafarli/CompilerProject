@@ -39,7 +39,7 @@ public class ConversationServiceImpl implements ConversationService {
 
         Conversation conversation = Conversation
                 .builder()
-                .conversationName(conversationDto.getTopicName())
+                .conversationName(conversationDto.getConversationName())
                 .conversationTopic(conversationTopic)
                 .build();
 
@@ -51,6 +51,7 @@ public class ConversationServiceImpl implements ConversationService {
                 .id(conversation.getId())
                 .conversationName(save.getConversationName())
                 .topicName(conversationTopic.getTopic())
+                .userDto(this.userToDto(conversation.getUser()))
                 .build();
 
     }
