@@ -22,6 +22,8 @@ public class Subject extends BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
+
+    @Column(columnDefinition = "text")
     private String description;
     @Column(name = "`rank`")
     private Integer rank;
