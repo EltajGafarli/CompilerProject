@@ -51,7 +51,7 @@ public class MessageController {
                 .ok(messageService.getMessageById(id));
     }
 
-    @GetMapping(path = "/{conversationId}")
+    @GetMapping(path = "/conversation/{conversationId}")
     public ResponseEntity<List<MessageDto>> getAllMessagesByConversationId(@PathVariable long conversationId) {
         return ResponseEntity
                 .ok(
