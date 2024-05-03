@@ -18,5 +18,7 @@ public interface MessageService {
 
     MessageDto getMessageById(long id);
 
+    List<MessageDto> getMessagesByConversationId(long conversationId);
+
     MessageDto replyMessage(UserDetails userDetails, long conversationId, long messageId, MessageDto messageDto);
 }

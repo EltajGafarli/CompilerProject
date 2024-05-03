@@ -1,6 +1,7 @@
 package com.example.sdpproject.service.compiler.impl;
 
 import com.example.sdpproject.dto.algorithm.ConversationDto;
+import com.example.sdpproject.dto.user.UserDto;
 import com.example.sdpproject.entity.algorithm.Conversation;
 import com.example.sdpproject.entity.algorithm.ConversationTopic;
 import com.example.sdpproject.entity.user.User;
@@ -70,6 +71,17 @@ public class ConversationServiceImpl implements ConversationService {
                 .id(conversation.getId())
                 .conversationName(conversation.getConversationName())
                 .topicName(conversation.getConversationTopic().getTopic())
+                .userDto(this.userToDto(conversation.getUser()))
+                .build();
+    }
+
+    private UserDto userToDto(User user) {
+        return UserDto
+                .builder()
+                .userName(user.getNameOfUser())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .build();
     }
 
@@ -87,6 +99,7 @@ public class ConversationServiceImpl implements ConversationService {
                 .topicName(conversation.getConversationTopic().getTopic())
                 .conversationName(conversation.getConversationName())
                 .id(conversation.getId())
+                .userDto(this.userToDto(conversation.getUser()))
                 .build();
     }
 }

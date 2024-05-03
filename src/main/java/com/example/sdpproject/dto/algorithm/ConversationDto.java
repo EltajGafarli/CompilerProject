@@ -1,5 +1,6 @@
 package com.example.sdpproject.dto.algorithm;
 
+import com.example.sdpproject.dto.user.UserDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -20,4 +21,5 @@ public class ConversationDto {
     @NotBlank(message = "Field should'nt blank")
     @NotNull(message = "Field should'nt null")
     private String topicName;
+    private UserDto userDto;
 }

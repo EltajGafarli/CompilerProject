@@ -91,7 +91,7 @@ public class SubjectServiceImpl implements SubjectService {
                         () -> new NotFoundException("Subject not found")
                 );
 
-        subject.setAlgorithmTag(null);
+        subject.getAlgorithmTag().setSubject(null);
         this.subjectRepository.delete(subject);
         this.subjectRepository.flush();
 

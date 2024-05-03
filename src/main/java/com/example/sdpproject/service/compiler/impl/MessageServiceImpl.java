@@ -1,6 +1,7 @@
 package com.example.sdpproject.service.compiler.impl;
 
 import com.example.sdpproject.dto.algorithm.MessageDto;
+import com.example.sdpproject.dto.user.UserDto;
 import com.example.sdpproject.entity.algorithm.Conversation;
 import com.example.sdpproject.entity.algorithm.Message;
 import com.example.sdpproject.entity.user.User;
@@ -68,6 +69,20 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public List<MessageDto> getMessagesByConversationId(long conversationId) {
+        Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(
+                () -> new NotFoundException("Conversation not found")
+        );
+
+
+
+        return conversation.getMessages()
+                .stream()
+                .map(this::messageToMessageDto)
+                .toList();
+    }
+
+    @Override
     public List<MessageDto> getMessages() {
         return messageRepository
                 .findAll()
@@ -81,6 +96,7 @@ public class MessageServiceImpl implements MessageService {
                 .builder()
                 .message(message.getMessage())
                 .id(message.getId())
+                .userDto(this.userToDto(message.getSender()))
                 .build();
     }
 
@@ -106,6 +122,19 @@ public class MessageServiceImpl implements MessageService {
                 .builder()
                 .id(message.getId())
                 .message(message.getMessage())
+                .userDto(this.userToDto(
+                        message.getSender()
+                ))
+                .build();
+    }
+
+    private UserDto userToDto(User user) {
+        return UserDto
+                .builder()
+                .userName(user.getNameOfUser())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .build();
     }
 
